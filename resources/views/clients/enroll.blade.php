@@ -11,7 +11,7 @@
             <h6 class="m-0 font-weight-bold text-primary">Enrollment Information</h6>
         </div>
         <div class="card-body">
-            <form action="#" method="POST">
+            <form action="{{ route('program.register.process') }}" method="POST">
                 @csrf
                 <div class="row mb-4">
                     <div class="col-md-6">
@@ -19,7 +19,9 @@
                             <label for="client_id" class="form-label">Select Client</label>
                             <select class="form-select" id="client_id" name="client_id">
                                 <option value="">Select Client</option>
-                                <!-- Client options will be populated from database -->
+                                @foreach($clients as $client)
+                                    <option value="{{ $client->id }}">{{ $client->full_name }} ({{ $client->id_number }})</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -28,7 +30,9 @@
                             <label for="program_id" class="form-label">Select Program</label>
                             <select class="form-select" id="program_id" name="program_id">
                                 <option value="">Select Program</option>
-                                <!-- Program options will be populated from database -->
+                                @foreach($programs as $program)
+                                    <option value="{{ $program->id }}">{{ $program->name }} (Code: {{ $program->code }})</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -115,6 +119,75 @@
                     <button type="submit" class="btn btn-primary">Complete Enrollment</button>
                 </div>
             </form>
+            
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const clientSelect = document.getElementById('client_id');
+                    const programSelect = document.getElementById('program_id');
+                    
+                    const clientInfoPlaceholder = document.getElementById('client-info-placeholder');
+                    const clientInfo = document.getElementById('client-info');
+                    const programInfoPlaceholder = document.getElementById('program-info-placeholder');
+                    const programInfo = document.getElementById('program-info');
+                    
+                    // Client selection change handler
+                    clientSelect.addEventListener('change', function() {
+                        const clientId = this.value;
+                        
+                        if (clientId) {
+                            // Fetch client info via AJAX
+                            fetch(`/api/clients/${clientId}/info`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    // Update client preview
+                                    document.getElementById('client-name').textContent = data.client.first_name + ' ' + data.client.last_name;
+                                    document.getElementById('client-id-number').textContent = data.client.id_number;
+                                    document.getElementById('client-gender').textContent = data.client.gender;
+                                    document.getElementById('client-dob').textContent = data.client.date_of_birth;
+                                    document.getElementById('client-phone').textContent = data.client.phone;
+                                    document.getElementById('client-email').textContent = data.client.email || 'N/A';
+                                    
+                                    // Show client info, hide placeholder
+                                    clientInfoPlaceholder.classList.add('d-none');
+                                    clientInfo.classList.remove('d-none');
+                                });
+                        } else {
+                            // Hide client info, show placeholder
+                            clientInfoPlaceholder.classList.remove('d-none');
+                            clientInfo.classList.add('d-none');
+                        }
+                    });
+                    
+                    // Program selection change handler
+                    programSelect.addEventListener('change', function() {
+                        const programId = this.value;
+                        
+                        if (programId) {
+                            // Fetch program info via AJAX
+                            fetch(`/api/programs/${programId}/info`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    // Update program preview
+                                    document.getElementById('program-name').textContent = data.program.name;
+                                    document.getElementById('program-code').textContent = data.program.code;
+                                    document.getElementById('program-status').textContent = data.program.status;
+                                    document.getElementById('program-start-date').textContent = data.program.start_date;
+                                    document.getElementById('program-end-date').textContent = data.program.end_date || 'N/A';
+                                    document.getElementById('program-capacity').textContent = data.available_capacity + ' of ' + data.program.capacity;
+                                    document.getElementById('program-description').textContent = data.program.description;
+                                    
+                                    // Show program info, hide placeholder
+                                    programInfoPlaceholder.classList.add('d-none');
+                                    programInfo.classList.remove('d-none');
+                                });
+                        } else {
+                            // Hide program info, show placeholder
+                            programInfoPlaceholder.classList.remove('d-none');
+                            programInfo.classList.add('d-none');
+                        }
+                    });
+                });
+            </script>
         </div>
     </div>
 </div>

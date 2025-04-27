@@ -8,7 +8,7 @@
             <a href="{{ route('clients.search') }}" class="btn btn-secondary btn-sm">
                 <i class="fas fa-arrow-left me-1"></i> Back to Search
             </a>
-            <a href="{{ route('enrollments.create') }}" class="btn btn-primary btn-sm">
+            <a href="{{ route('program.register.form') }}" class="btn btn-primary btn-sm">
                 <i class="fas fa-clipboard-list me-1"></i> Enroll in Program
             </a>
         </div>
@@ -65,7 +65,7 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
                     <h6 class="m-0 font-weight-bold text-primary">Program Enrollments</h6>
-                    <a href="{{ route('enrollments.create') }}" class="btn btn-sm btn-primary">
+                    <a href="{{ route('program.register.form') }}" class="btn btn-sm btn-primary">
                         <i class="fas fa-plus me-1"></i> Enroll in Program
                     </a>
                 </div>

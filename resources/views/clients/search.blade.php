@@ -11,7 +11,7 @@
             <h6 class="m-0 font-weight-bold text-primary">Search Filters</h6>
         </div>
         <div class="card-body">
-            <form action="#" method="GET">
+            <form action="{{ route('clients.search') }}" method="GET">
                 <div class="row mb-3">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -35,7 +35,9 @@
                             <label for="program" class="form-label">Enrolled Program</label>
                             <select class="form-select" id="program" name="program">
                                 <option value="">All Programs</option>
-                                <!-- Program options will be populated from database -->
+                                @foreach($programs as $program)
+                                    <option value="{{ $program->id }}" {{ request('program') == $program->id ? 'selected' : '' }}>{{ $program->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

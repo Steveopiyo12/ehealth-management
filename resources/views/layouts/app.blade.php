@@ -146,7 +146,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('enrollments.create') }}" class="nav-link {{ request()->routeIs('enrollments.create') ? 'active' : '' }}">
+                            <a href="{{ route('program.register.form') }}" class="nav-link {{ request()->routeIs('program.register.form') ? 'active' : '' }}">
                                 <i class="fas fa-clipboard-list"></i> Enroll Client
                             </a>
                         </li>
@@ -156,6 +156,7 @@
                             </a>
                         </li>
                     </ul>
+
                 </div>
             </div>
             

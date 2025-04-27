@@ -11,7 +11,18 @@
             <h6 class="m-0 font-weight-bold text-primary">Client Information</h6>
         </div>
         <div class="card-body">
-            <form action="#" method="POST">
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <strong>Validation Error!</strong>
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form action="{{ route('clients.store') }}" method="POST">
                 @csrf
                 <div class="row mb-3">
                     <div class="col-md-4">
