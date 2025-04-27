@@ -76,7 +76,33 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- For demonstration purposes, showing empty state -->
+                        @forelse($clients as $client)
+                        <tr>
+                            <td>{{ $client->id }}</td>
+                            <td>{{ $client->full_name }}</td>
+                            <td>{{ $client->id_number }}</td>
+                            <td>{{ ucfirst($client->gender) }}</td>
+                            <td>{{ $client->phone }}</td>
+                            <td>{{ $client->email ?? 'N/A' }}</td>
+                            <td>
+                                @forelse($client->enrollments as $enrollment)
+                                    <span class="badge bg-primary">{{ $enrollment->program->name }}</span>
+                                @empty
+                                    <span class="badge bg-secondary">None</span>
+                                @endforelse
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{{ route('clients.show', $client) }}" class="btn btn-sm btn-info">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{{ route('clients.edit', $client) }}" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        @empty
                         <tr>
                             <td colspan="8" class="text-center">
                                 <div class="py-4">
@@ -85,29 +111,7 @@
                                 </div>
                             </td>
                         </tr>
-                        
-                        <!-- Sample data row (commented out for now) -->
-                        <!--
-                        <tr>
-                            <td>1</td>
-                            <td>John Doe</td>
-                            <td>ID12345678</td>
-                            <td>Male</td>
-                            <td>+254 123 456789</td>
-                            <td>john.doe@example.com</td>
-                            <td>
-                                <span class="badge bg-primary">Diabetes Management</span>
-                            </td>
-                            <td>
-                                <a href="{{ route('clients.show', 1) }}" class="btn btn-sm btn-info">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="#" class="btn btn-sm btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        -->
+                        @endforelse
                     </tbody>
                 </table>
             </div>

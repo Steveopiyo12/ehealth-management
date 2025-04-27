@@ -23,24 +23,24 @@
                 </div>
                 <div class="card-body">
                     <div class="text-center mb-4">
-                        <img class="img-profile rounded-circle" src="https://via.placeholder.com/150" alt="Client Photo" style="width: 150px; height: 150px;">
-                        <h4 class="mt-3">John Doe</h4>
-                        <p class="text-muted">ID: 12345678</p>
+                        <img class="img-profile rounded-circle" src="{{ asset('img/undraw_profile.svg') }}" alt="{{ $client->full_name }}" style="width: 150px; height: 150px; background-color: #f8f9fc; padding: 10px;">
+                        <h4 class="mt-3">{{ $client->full_name }}</h4>
+                        <p class="text-muted">ID: {{ $client->id_number }}</p>
                         <div class="mt-2">
-                            <a href="#" class="btn btn-sm btn-primary">
+                            <a href="{{ route('clients.edit', $client) }}" class="btn btn-sm btn-primary">
                                 <i class="fas fa-edit me-1"></i> Edit
                             </a>
                         </div>
                     </div>
                     <hr>
                     <div>
-                        <p><strong><i class="fas fa-venus-mars me-2"></i> Gender:</strong> Male</p>
-                        <p><strong><i class="fas fa-birthday-cake me-2"></i> Date of Birth:</strong> 01/01/1980</p>
-                        <p><strong><i class="fas fa-phone me-2"></i> Phone:</strong> +254 123 456789</p>
-                        <p><strong><i class="fas fa-envelope me-2"></i> Email:</strong> john.doe@example.com</p>
-                        <p><strong><i class="fas fa-map-marker-alt me-2"></i> Address:</strong> 123 Health Street, Nairobi</p>
-                        <p><strong><i class="fas fa-ambulance me-2"></i> Emergency Contact:</strong> Jane Doe</p>
-                        <p><strong><i class="fas fa-phone me-2"></i> Emergency Phone:</strong> +254 987 654321</p>
+                        <p><strong><i class="fas fa-venus-mars me-2"></i> Gender:</strong> {{ $client->gender }}</p>
+                        <p><strong><i class="fas fa-birthday-cake me-2"></i> Date of Birth:</strong> {{ $client->date_of_birth }}</p>
+                        <p><strong><i class="fas fa-phone me-2"></i> Phone:</strong> {{ $client->phone }}</p>
+                        <p><strong><i class="fas fa-envelope me-2"></i> Email:</strong> {{ $client->email ?: 'N/A' }}</p>
+                        <p><strong><i class="fas fa-map-marker-alt me-2"></i> Address:</strong> {{ $client->address ?: 'N/A' }}, {{ $client->city ?: '' }}</p>
+                        <p><strong><i class="fas fa-ambulance me-2"></i> Emergency Contact:</strong> {{ $client->emergency_contact ?: 'N/A' }}</p>
+                        <p><strong><i class="fas fa-phone me-2"></i> Emergency Phone:</strong> {{ $client->emergency_phone ?: 'N/A' }}</p>
                     </div>
                 </div>
             </div>

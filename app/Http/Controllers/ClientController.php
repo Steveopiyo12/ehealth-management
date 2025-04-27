@@ -68,8 +68,14 @@ class ClientController extends Controller
      */
     public function search(Request $request)
     {
+        // Get all programs for the filter dropdown (show all programs, not just active ones)
+        $programs = Program::orderBy('name')->get();
+        
+        // Start building query
         $query = Client::query();
-        $programs = Program::where('status', 'active')->get();
+        
+        // Eagerly load enrollments and their programs
+        $query->with(['enrollments.program']);
 
         // Apply search filters if provided
         if ($request->filled('keyword')) {
@@ -88,12 +94,17 @@ class ClientController extends Controller
         }
 
         if ($request->filled('program')) {
-            $query->whereHas('programs', function($q) use ($request) {
-                $q->where('programs.id', $request->program);
+            $query->whereHas('enrollments', function($q) use ($request) {
+                $q->where('program_id', $request->program);
             });
         }
 
+        // Get results and return them to the view
         $clients = $query->latest()->paginate(10);
+        
+        // Keep search parameters in the URL for pagination links
+        $clients->appends($request->all());
+        
         return view('clients.search', compact('clients', 'programs'));
     }
 
