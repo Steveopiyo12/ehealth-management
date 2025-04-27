@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\EnrollmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/programs/create', [ProgramController::class, 'create'])->name('programs.create');
+Route::get('/clients/create', [ClientController::class, 'create'])->name('clients.create');
+Route::get('/clients/enroll', [EnrollmentController::class, 'create'])->name('enrollments.create');
+Route::get('/clients/search', [ClientController::class, 'search'])->name('clients.search');
+Route::get('/clients/{client}', [ClientController::class, 'show'])->name('clients.show');
